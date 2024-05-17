@@ -1,6 +1,7 @@
-from fastapi import FastAPI, File, UploadFile, Request,HTTPException
+from fastapi import FastAPI, File, UploadFile, Request, HTTPException
 from typing import List
-
+import uvicorn
+import os
 
 app = FastAPI()
 
@@ -39,3 +40,9 @@ async def create_upload_files(files: List[UploadFile] = File(...)):
         })
 
     return {"file_details": file_details}
+
+
+if __name__ == "__main__":
+    host = os.getenv("HOST", "0.0.0.0")
+    port = int(os.getenv("PORT", 9000))
+    uvicorn.run(app, host=host, port=port)
